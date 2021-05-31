@@ -28,8 +28,22 @@ This code presumes certain hardware is being used.
 
 This project requires the following package(s):
 
-* `psutils` at least version 5.8.0
-* `paho-mqtt` at least version 1.5.1
+* `paho-mqtt` 
+  * Python MQTT package 
+  * v1.5.1 or later
+* `SQLAlchemy` 
+  * Python ORM for SQL databases 
+  * v3. or later
+* `mysql-connector-python` 
+  * MySQL Connector for Python
+  * v8. or later
+* `flask` 
+  * Flask framework for web apps
+  * v2. or later
+* `flask-cors` 
+  * Flask CORS support for web apps
+  * v2. or later
+
 
 Remaining packages are Python 'built-ins'.
 
