@@ -44,6 +44,7 @@ def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("connected OK Returned code=", rc)
     else:
+        # TODO: Add error code detail display (error codes 1-5)
         print("Bad connection Returned code=", rc)
 
 
@@ -52,6 +53,9 @@ def on_message(client, userdata, message):
         topic=message.topic,
         payload=message.payload.decode("UTF-8"),
     )
+    # TODO: Unpack the data into variables
+    # TODO: Insert data variables into a new record
+    # TODO: Save the new record
     print(f"{userdata} | {data}")
 
 
