@@ -21,10 +21,10 @@ This code base is not complete, but **no** contributions are required.
 
 This code presumes certain hardware is being used.
 
-### Hardware:
+#### Hardware:
 * Raspberry Pi 3B or later
 
-### Package Requirements
+#### Package Requirements
 
 This project requires the following package(s):
 
@@ -49,35 +49,60 @@ or using the PyCharm Project Preferences
 
 ## Required Software Installation and Configuration
 
-Install MySQL 8 on Raspberry Pi
+Install MariaDB on Raspberry Pi
 
 ```shell
-sudo apt-get install mysql
+sudo apt-get install mariadb-server
 ```
+The process with start with the following text (or similar)...
+```text
+pi@per-pi-000:~ $ sudo apt-get install mariadb-server
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+
+The following NEW packages will be installed:
+  mariadb-server
+0 upgraded, 1 newly installed, 0 to remove and 8 not upgraded.
+```
+
+When it asks if you wish to install press Y then Enter.
 
 When installed successfully, run the MySQL/MariaDB shell:
 
 ```shell
-mysql -u root
+sudo mysql -uroot
 ```
 
-you should see:
+You should see a welcome similar to the following:
 ```text
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 39
+Server version: 10.3.27-MariaDB-0+deb10u1 Raspbian 10
 
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> 
 ```
+The `MariaDB [(none)]>` indicates that you are now in the MySQL/MariaDB command line interface.
 
-Now you create the user and database with required access rights, replacing the xxx with 
-your initials in this code, and throughout the Python and other source code.
+Now you create the user and database with required access rights, replacing the `xxx` with 
+your **initials** in this code, and throughout the Python and other source code.
 
-```SQL
+The easiest way to do this is to edit the sample code below first.
+Then copy it to the clipboard and return to the terminal. 
+In the terminal press `CTRL`+`SHIFT`+`V` to paste all the code in.
+
+```mysql
 DROP DATABASE IF EXISTS xxx_iot;
 DROP USER IF EXISTS 'xxx_iot'@'localhost';
 FLUSH PRIVILEGES;
 
-CREATE DATABASE IF NOT EXISTS xxx_traffic_cop;
-CREATE USER 'xxx_iot'@'localhost' IDENTIFIED BY 'Password1';
 CREATE DATABASE IF NOT EXISTS xxx_iot;
-FLUSH PRIVILEGES;
+
+CREATE USER 'xxx_iot'@'localhost' IDENTIFIED BY 'Password1';
 
 GRANT USAGE ON *.* TO 'xxx_iot'@'localhost' 
     REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 
@@ -88,6 +113,66 @@ GRANT ALL PRIVILEGES ON `xxx_iot`.* TO 'xxx_iot'@'localhost';
 FLUSH PRIVILEGES;
 ```
 
+If you edited it all correctly then the commands will be executed, creating a new user, new 
+password and new database ready for the rest of the server (and dashboard).
+
+Here is an example of the output from the commands after successfully running (note we used 
+`xxx` for our initials:
+```text
+MariaDB [(none)]> DROP DATABASE IF EXISTS xxx_iot;
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [(none)]> DROP USER IF EXISTS 'xxx_iot'@'localhost';
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [(none)]> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [(none)]> 
+MariaDB [(none)]> CREATE DATABASE IF NOT EXISTS xxx_iot;
+Query OK, 1 row affected (0.001 sec)
+
+MariaDB [(none)]> 
+MariaDB [(none)]> CREATE USER 'xxx_iot'@'localhost' IDENTIFIED BY 'Password1';
+Query OK, 0 rows affected (0.002 sec)
+
+MariaDB [(none)]> 
+MariaDB [(none)]> GRANT USAGE ON *.* TO 'xxx_iot'@'localhost' 
+    ->     REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 
+    ->     MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [(none)]> 
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON `xxx_iot`.* TO 'xxx_iot'@'localhost';
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [(none)]> 
+MariaDB [(none)]> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.003 sec)
+```
+Check to see if you got any errors. If you did then the problem is most likely a typo... 
+Simply correct the error, copy the whole script again and paste into the CLI.
+
+Use the command:
+```mysql
+SHOW DATABASES;
+```
+This should show a table similar to this to indicate the database was created:
+```text
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| xxx_iot            |
++--------------------+
+4 rows in set (0.024 sec)
+```
+
+When the final line is executed successfully use `\q` followed by `ENTER` to quit the MySQL CLI.
+
+You are ready to develop the server code.
 
 ## Credits
 
