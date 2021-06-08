@@ -14,13 +14,13 @@ This code base is not complete, but **no** contributions are required.
 ## Features
 
 * Listens to an MQTT topic and Receives data
-* Store received sensor (environment) data to a MySQL database (table)
-* Store received sensor hardware data to a MySQL database (table)
+* Store received sensehat (environment) data to a MySQL database table
+* Store received sensor hardware data to a MySQL database table
 
 
 ## Requirements
 
-This code presumes certain hardware is being used.
+This code presumes certain hardware is in use.
 
 #### Hardware:
 
@@ -74,6 +74,12 @@ pip3 install SQLAlchemy
 
 There are a number of items required for this stage. This includes MySQL/MariaDB and Mosquitto.
 
+### Install and Configure Mosquitto on Raspberry Pi
+
+TODO: Create these instructions
+
+
+
 ### Install MariaDB on Raspberry Pi
 
 ```shell
@@ -118,7 +124,8 @@ The `MariaDB [(none)]>` indicates that you are now in the MySQL/MariaDB command 
 Now you create the user and database with required access rights, replacing the `xxx` with 
 your **initials** in this code, and throughout the Python and other source code.
 
-The easiest way to do this is to edit the sample code below first.
+The easiest way to do this is to **edit the sample code** below first.
+
 Then copy it to the clipboard and return to the terminal. 
 In the terminal press `CTRL`+`SHIFT`+`V` to paste all the code in.
 
@@ -143,8 +150,8 @@ FLUSH PRIVILEGES;
 If you edited it all correctly then the commands will be executed, creating a new user, new 
 password and new database ready for the rest of the server (and dashboard).
 
-Here is an example of the output from the commands after successfully running (note we used 
-`xxx` for our initials:
+Here is an example of the output from the commands after successfully running *(note: we used 
+`xxx` for our initials)*:
 ```text
     MariaDB [(none)]> DROP DATABASE IF EXISTS xxx_iot;
     Query OK, 0 rows affected (0.002 sec)
@@ -179,7 +186,7 @@ Use the command:
 ```mysql
 SHOW DATABASES;
 ```
-This should show a table similar to this to indicate the database was created:
+This should show a table similar to this to indicate the database is present:
 ```text
     +--------------------+
     | Database           |
@@ -192,13 +199,10 @@ This should show a table similar to this to indicate the database was created:
     4 rows in set (0.024 sec)
 ```
 
-When the final line is executed successfully use `\q` followed by `ENTER` to quit the MySQL CLI.
+When the final line has run successfully, use `\q` followed by `ENTER` to quit the MySQL 
+CLI.
 
 You are ready to develop the server code.
-
-### Install and Configure Mosquitto on Raspberry Pi
-
-TODO: Create these instructions
 
 
 ## Credits
