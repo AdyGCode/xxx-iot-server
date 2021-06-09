@@ -64,8 +64,10 @@ session = sessionmaker(bind=engine)()
 #       to create a new line and add a }
 #       Hint -- check the GitHub repository code to see where the lines are
 
-# TODO: modify the method definition to have a default of None for details
+# TODO: modify the method definition to have details (a named parameter, with a 'default' value)
+#       have a value of None
 def store_system_data(details):
+    # TODO: DO NOT change the IF statement or the assignment statements below
     if details is not None:
         sensor = Sensor()
         sensor.sensor_name = details["sensor"]["sensor"]
@@ -82,16 +84,15 @@ def store_system_data(details):
         sensor.hw_camera = details["sensor"]['hw-camera']
         sensor.hw_spi = details["sensor"]['hw-spi']
         sensor.recorded_at = details["sensor"]['time']
-        # Add and commit the sensor data to the database TODO: remnove this line
+        # Add and commit the sensor data to the database TODO: remove this line
         session.add(sensor)
         session.commit()
 
 
-    # TODO: modify the method definition to have a default of None for details
-def store_sensehat_tph(details):
+def store_sensehat_tph(details=None):
     if details is not None:
         # TODO: Modify the None below to create a new Sensehat_TPH object
-        #       See the Sensor example above
+        #       See the `sensor = Sensor()` example above
         sensehat_tph = None
         # TODO: set the sensehat_tph.sensor_name to be the value from
         #       details['sensehat']['sensor']
@@ -126,14 +127,15 @@ def on_message(client, userdata, message):
     if details != "" and details["sensor"] != "":
         store_system_data()
     # TODO: Add a decision that checks to see if the details are not blank
-    #       and the sensor "sensehat" is not blank
-    # TODO: call the store_sensehat_data method
+    #       and the sensor "sensehat" is not blank (similar to the previous lines)
+    # TODO:     call the store_sensehat_data method
 
 
 if __name__ == '__main__':
     #  Get the Pi name, model, revision, serial number and MAC
     server_name = Host.name()
     server_serial = Host.serial()
+    
     topic = "NMTAFE/IoT"
     client_id = f"{server_name}-{server_serial}-server"
 
