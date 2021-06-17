@@ -83,6 +83,7 @@ TODO: Create these instructions
 ### Install MariaDB on Raspberry Pi
 
 ```shell
+sudo apt update
 sudo apt-get install mariadb-server
 ```
 
