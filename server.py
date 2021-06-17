@@ -68,20 +68,20 @@ session = sessionmaker(bind=engine)()
 def store_system_data(details):
     if details is not None:
         sensor = Sensor()
-        sensor.sensor_name = details["sensor"]["sensor"]
-        sensor.sensor_model = details["sensor"]['model']
-        sensor.sensor_ip = details["sensor"]['ip']
-        sensor.sensor_mac = details["sensor"]['mac']
-        sensor.boot_time = details["sensor"]['boot-time']
-        sensor.ram_free = details["sensor"]['sensor-free-ram']
-        sensor.ram_total = details["sensor"]['sensor-total-ram']
-        sensor.storage_free = details["sensor"]['sensor-free-storage']
-        sensor.storage_total = details["sensor"]['sensor-total-storage']
-        sensor.hw_i2c = details["sensor"]['hw-i2c']
-        sensor.hw_bt = details["sensor"]['hw-bt']
-        sensor.hw_camera = details["sensor"]['hw-camera']
-        sensor.hw_spi = details["sensor"]['hw-spi']
-        sensor.recorded_at = details["sensor"]['time']
+        sensor.sensor_name = details["system"]["sensor"]
+        sensor.sensor_model = details["system"]['model']
+        sensor.sensor_ip = details["system"]['ip']
+        sensor.sensor_mac = details["system"]['mac']
+        sensor.boot_time = details["system"]['boot-time']
+        sensor.ram_free = details["system"]['sensor-free-ram']
+        sensor.ram_total = details["system"]['sensor-total-ram']
+        sensor.storage_free = details["system"]['sensor-free-storage']
+        sensor.storage_total = details["system"]['sensor-total-storage']
+        sensor.hw_i2c = details["system"]['hw-i2c']
+        sensor.hw_bt = details["system"]['hw-bt']
+        sensor.hw_camera = details["system"]['hw-camera']
+        sensor.hw_spi = details["system"]['hw-spi']
+        sensor.recorded_at = details["system"]['time']
         # Add and commit the sensor data to the database TODO: remnove this line
         session.add(sensor)
         session.commit()
@@ -101,7 +101,7 @@ def store_sensehat_tph(details):
         # TODO: set the sensehat_tph.temperature to the correct value
         # TODO: set the sensehat_tph.accelerometer to the correct value
         # TODO: set the sensehat_tph.compass to the correct value
-        sensehat_tph.recorded_at = details["sensor"]['time']
+        sensehat_tph.recorded_at = details["sensehat"]['time']
         # TODO: add and commit the sensehat_tph data to the database
         # TODO: delete this line and the PASS line below
         pass
@@ -123,7 +123,7 @@ def on_message(client, userdata, message):
     # TODO: Unpack the data into variables
     details = data['payload']
     # TODO: Insert data variables into a new record
-    if details != "" and details["sensor"] != "":
+    if details != "" and details["system"] != "":
         store_system_data()
     # TODO: Add a decision that checks to see if the details are not blank
     #       and the sensor "sensehat" is not blank
